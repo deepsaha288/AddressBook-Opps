@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 class ContactDetails{
 
@@ -107,7 +108,7 @@ class ContactDetails{
 	return "Details of: "+ firstName+ " "+lastName+"\n"
 			     +"Area: "+area+"\n"
 			     +"City: "+city+"\n"
-			     +"State: "+state+"\n"
+		             +"State: "+state+"\n"
 			     +"Zip: "+pincode+"\n"
 			     +"Phone Number: "+phoneNumber+"\n"
 			     +"Email: "+email;
@@ -176,6 +177,23 @@ class ContactDetails{
 				}
 	}
 
+	public static String deleteDetails() {
+		String name1;
+		System.out.print("Enter FirstName");
+		name1 =sc.next();
+
+		if (name1.equals(list.get(0).getFirstName())) {
+			list.remove(0);
+         return "Deleted";
+		}else{
+			return "Name Not Available in List";
+   	}
+	}
+
+
+
+	
+
 	public static void main(String[] args){
 
 
@@ -187,16 +205,25 @@ class ContactDetails{
 
 		if (check.equals("y") || check.equals("Y")) {
 
-			System.out.println(editDetails());
+		System.out.println(editDetails());
 
 		}else{
 
-			System.out.println("Done");
+		System.out.println("Done");
 
 
-		}			
+		}
+
+	 	System.out.print("Do you want to Delete That Contact ? (y/n)");
+		check=sc.next();
+		if (check.equals("y") || check.equals("Y")) {
+		System.out.println(deleteDetails());
+		}else{
+		System.out.println("Done");
+		}
+			
 		for(int i=0; i<list.size(); i++)
 
-			System.out.println(list.get(i));
+		System.out.println(list.get(i));
 	}		
 }	
