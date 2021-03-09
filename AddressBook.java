@@ -1,5 +1,7 @@
+import java.util.Scanner;
+
 interface iContactDetails{
-	public void details(String firstName, String LastName, String area, String city, String state, int pincode, int phoneNumber, String email);
+	public void Adddetails(String firstName, String LastName, String area, String city, String state, int pincode, int phoneNumber, String email);
 }
 
 class ContactDetails{
@@ -28,26 +30,26 @@ class ContactDetails{
 	public String toString(){
 
 		return "Details of: "+ firstName+ " "+lastName+"\n"
-						    +"Area: "+area+"\n"
-						    +"City: "+city+"\n"
-						    +"State: "+state+"\n"
-						    +"pincode: "+pincode+"\n"
-						    +"Phone Number: "+phoneNumber+"\n"
-						    +"Email: "+email;
+									+"Area: "+area+"\n"
+									+"City: "+city+"\n"
+									+"State: "+state+"\n"
+									+"pincode: "+pincode+"\n"
+									+"Phone Number: "+phoneNumber+"\n"
+									+"Email: "+email;
 	}
 }
 
 public class Addressbook implements iContactDetails {
 
-	private int numOfPerson = 0;
+	private static int numOfPerson;
 	private ContactDetails[] contactDetails;
 
 	public Addressbook(){
-		contactDetails = new ContactDetails[3];
+		contactDetails = new ContactDetails[5];
 	}
 
-	public void details(String firstName, String lastName, String area, String city , String state, int pincode, int phoneNumber1, String email){
-		contactDetails [ numOfPerson ] = new ContactDetails(firstName, lastName, area, city, state, pincode, phoneNumber1, email);
+	public void Adddetails(String firstName, String lastName, String area, String city , String state, int pincode, int phoneNumber, String email){
+		contactDetails [ numOfPerson ] = new ContactDetails(firstName, lastName, area, city, state, pincode, phoneNumber, email);
 		numOfPerson++;
 	}
 
@@ -59,10 +61,37 @@ public class Addressbook implements iContactDetails {
 
 
 		public static void main(String[] args){
-		System.out.println("Welcome To Address Book Problem");
+		Scanner sc=new Scanner(System.in);
 
+		System.out.println("Number Of Details to Add");
+		int numOfPerson=sc.nextInt();
+		String name=sc.nextLine();
 		Addressbook address = new Addressbook();
-		address.details("Deep", "Saha", "Ejipura", "Bangalore", "Karnataka", 560047, 9916522077, "deepsaha9@gmail.com");
-		address.computeDetails();
+
+
+		for (int i = 1; i <= numOfPerson; i++) {
+
+			System.out.println("Enter no. of details of: "+i);
+
+			System.out.println("Enter FirstName");
+			String firstName=sc.next();
+			System.out.println("Enter LastName");
+			String lastName=sc.next();
+			System.out.println("Enter Area");
+			String area=sc.next();
+			System.out.println("Enter CityName");
+			String city=sc.next();
+			System.out.println("Enter StateName");
+			String state=sc.next();
+			System.out.println("Enter pinCode");
+			int pincode=sc.nextInt();
+			System.out.println("Enter PhoneNumber");
+			int phoneNumber=sc.nextInt();
+			System.out.println("Enter Email");
+			String email=sc.next();
+
+			address.Adddetails(firstName, lastName, area, city, state, pincode, phoneNumber, email);
+			address.computeDetails();
+		}
 	}		
 }	
