@@ -1,292 +1,68 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+interface iContactDetails{
+	public void details(String firstName, String LastName, String area, String city, String state, int pincode, int phoneNumber, String email);
+}
 
-class ContactDetails {
+class ContactDetails{
 
-	public String firstName;
-	public String lastName;
-	public String area;
-	public String city;
-	public String state;
-	public int pin;
-	public int phoneNumber;
-	public String email;
+	public final String firstName;
+	public final String lastName;
+	public final String area;
+	public final String city;
+	public final String state;
+	public final int pincode;
+	public final int phoneNumber;
+	public final String email;
 
-	public ContactDetails(String firstName, String lastName, String area, String city, String state, int pin,
-			int phoneNumber, String email) {
+	public ContactDetails(String firstName, String lastName, String area, String city , String state, int pincode, int phoneNumber, String email){
 
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.area = area;
 		this.city = city;
 		this.state = state;
-		this.pin = pin;
+		this.pincode = pincode;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 	}
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+	public String toString(){
 
-	public void setFirstName( String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public void setLastName( String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getArea() {
-		return this.area;
-	}
-
-	public void setArea(String area) {
-		this.area = area;
-	}
-
-	public String getCity() {
-		return this.city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return this.state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public int getPin() {
-		return this.pin;
-	}
-
-	public void setZip(int pin) {
-		this.pin = pin;
-	}
-
-	public int getPhoneNumber() {
-		return this.phoneNumber;
-	}
-
-	public void setPhoneNumber( int phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String toString() {
-		return "Details of: " + firstName + " " + lastName + "\n" + "Area: " + area + "\n" + "City: " + city + "\n"
-				+ "State: " + state + "\n" + "Pin: " + pin + "\n" + "Phone Number: " + phoneNumber + "\n" + "Email: "
-				+ email;
+		return "Details of: "+ firstName+ " "+lastName+"\n"
+						    +"Area: "+area+"\n"
+						    +"City: "+city+"\n"
+						    +"State: "+state+"\n"
+						    +"pincode: "+pincode+"\n"
+						    +"Phone Number: "+phoneNumber+"\n"
+						    +"Email: "+email;
 	}
 }
 
-class AddressBookDetails {
+public class Addressbook implements iContactDetails {
 
-	public String addressBookName;
-	public String firstName;
-	public String lastName;
-	public String area, city, state, email;
-	public int pin, phoneNumber;
-	public static int indexNum;
+	private int numOfPerson = 0;
+	private ContactDetails[] contactDetails;
 
-	public AddressBookDetails(String addressBookName) {
-		this.addressBookName = addressBookName;
+	public Addressbook(){
+		contactDetails = new ContactDetails[3];
 	}
 
-	public static ArrayList<ContactDetails> list = new ArrayList<ContactDetails>();
-
-	public Scanner sc = new Scanner(System.in);
-
-	public boolean checkName() {
-
-		System.out.println("Enter First Name");
-		firstName = sc.next();
-		System.out.println("Enter Last Name");
-		lastName = sc.next();
-
-		for (indexNum = 0; indexNum < list.size(); indexNum++) {
-			if (firstName.equals(list.get(indexNum).getFirstName())
-					&& lastName.equals(list.get(indexNum).getLastName())) {
-				System.out.println("Contact Name Exists");
-				return true;
-			}
-		}
-		return false;
+	public void details(String firstName, String lastName, String area, String city , String state, int pincode, int phoneNumber1, String email){
+		contactDetails [ numOfPerson ] = new ContactDetails(firstName, lastName, area, city, state, pincode, phoneNumber1, email);
+		numOfPerson++;
 	}
 
-	public void addDetails() {
-
-		if (!checkName()) {
-
-			System.out.println("Enter Area");
-			area = sc.next();
-			System.out.println("Enter CityName");
-			city = sc.next();
-			System.out.println("Enter StateName");
-			state = sc.next();
-			System.out.println("Enter pinCode");
-			pin = sc.nextInt();
-			System.out.println("Enter PhoneNumber");
-			 phoneNumber = sc.nextInt();
-			System.out.println("Enter Email");
-			email = sc.next();
-		}
-		  
-      list.add(new ContactDetails(firstName, lastName, area, city, state, pin, phoneNumber, email));
-	}
-
-	public String editDetails() {
-
-		try (Scanner sc = new Scanner(System.in)) {
-			System.out.println("Details to be Edited: ");
-
-			if (checkName()) {
-				System.out.println("Enter FirstName");
-				list.get(indexNum).setFirstName(sc.next());
-				System.out.println("Enter LastName");
-				list.get(indexNum).setLastName(sc.next());
-				System.out.println("Enter Area");
-				list.get(indexNum).setArea(sc.next());
-				System.out.println("Enter CityName");
-				list.get(indexNum).setCity(sc.next());
-				System.out.println("Enter StateName");
-				list.get(indexNum).setState(sc.next());
-				System.out.println("Enter pinCode");
-				list.get(indexNum).setZip(sc.nextInt());
-				System.out.println("Enter PhoneNumber");
-				list.get(indexNum).setPhoneNumber(sc.nextInt());
-				System.out.println("Enter Email");
-				list.get(indexNum).setEmail(sc.next());
-
-				return "Edited";
-
-			}
-		}
-		return "Name Not Available in List";
-	}
-	
-	public String deleteDetails() {
-
-		System.out.print("Details to be Deleted");
-		if (checkName()) {
-			list.remove(indexNum);
-			return "Deleted";
-		}
-		return "Name Not Available in List";
-	}
-
-	public void displayDetails() {
-
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println();
-			System.out.println(list.get(i));
+	private void computeDetails(){
+		for (int i=0; i<numOfPerson; i++){
+			System.out.println(contactDetails[i]);
 		}
 	}
 
-	@Override
-	public String toString() {
-		return addressBookName;
-	}
-}
 
-public class Addressbook {
+		public static void main(String[] args){
+		System.out.println("Welcome To Address Book Problem");
 
-	public static int bookNumber = 0;
-
-	public static Scanner sc = new Scanner(System.in);
-
-	public static ArrayList<AddressBookDetails> addressBook = new ArrayList<>();
-
-	public static void addAdressBookDetails() {
-
-		System.out.println("Enter Name of Address Book");
-		String name = sc.next();
-
-		addressBook.add(new AddressBookDetails(name));
-	}
-
-	public static void pickAddressBook() {
-
-		System.out.println("You are Currently in " + addressBook.get(bookNumber) + " AddressBook");
-		if (addressBook.size() > 1) {
-			for (int i = 0; i < addressBook.size(); i++)
-			System.out.println(i + ". " + addressBook.get(i));
-			System.out.println("Pick Address Book Number");
-			bookNumber = Integer.parseInt(sc.next());
-		}
-	}
-   public  static void option() {
-
-		try (Scanner sc = new Scanner(System.in)) {
-			String check = "Y";
-			while ((check.equals("Y")) || (check.equals("y"))) {
-
-				System.out.println("Choose Below Option");
-				System.out.println("1: Add Contact");
-				System.out.println("2: Edit Contact");
-				System.out.println("3: Delete Contact");
-				System.out.println("4: Display Contact");
-				System.out.println("5: Exit");
-
-				String choose = sc.next();
-				switch (choose) {
-
-				case "1":
-					addressBook.get(bookNumber).addDetails();
-					break;
-				case "2":
-					pickAddressBook();
-					System.out.println(addressBook.get(bookNumber).editDetails());
-					break;
-				case "3":
-					pickAddressBook();
-					System.out.println(addressBook.get(bookNumber).deleteDetails());
-					break;
-				case "4":
-					pickAddressBook();
-					addressBook.get(bookNumber).displayDetails();
-					break;
-				default:
-					System.out.println("Exit");
-
-					System.out.println("Want to Make More Changes in This Address Book? (y/n)");
-					check = sc.next();
-
-				}
-
-			}
-		}
-	}
-
-	public static void main(String[] args) {
-
-		System.out.println("Welcome to Address Book Program");
-
-		String check = "Y";
-		while ((check.equals("Y")) || (check.equals("y"))) {
-
-			addAdressBookDetails();
-			option();
-
-			System.out.println("Want to Add More Address Book (y/n)");
-			check = sc.next();
-		}
-
-	}
-}
+		Addressbook address = new Addressbook();
+		address.details("Deep", "Saha", "Ejipura", "Bangalore", "Karnataka", 560047, 9916522077, "deepsaha9@gmail.com");
+		address.computeDetails();
+	}		
+}	
